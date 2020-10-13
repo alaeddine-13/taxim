@@ -42,10 +42,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.postgres',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     'rest_framework',
     'share',
     'channels',
+    'django_extensions',
 ]
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+LOGIN_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -160,3 +170,30 @@ SIMPLE_JWT = {
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=1),
     'USER_ID_CLAIM': 'id',
 }
+
+SOCIALACCOUNT_PROVIDERS = {
+    'facebook': {
+        'METHOD': 'oauth2',
+        'SCOPE': ['email'],
+        'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
+        'LOCALE_FUNC': lambda request: 'en_US',
+        'VERSION': 'v2.4'
+     }
+}
+
+# todo: Add a Site for domain, matching settings.SITE_ID=1 (django.contrib.sites app)
+SITE_ID = 1
+
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
+MAILGUN_ACCESS_KEY = os.getenv("MAILGUN_ACCESS_KEY")
+MAILGUN_SERVER_NAME = os.getenv("MAILGUN_SERVER_NAME")
+
+DEFAULT_FROM_EMAIL = f"no-reply@{MAILGUN_SERVER_NAME}"
+
+#ACCOUNT_EMAIL_VERIFICATION = "mandatory"

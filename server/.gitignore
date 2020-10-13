@@ -140,3 +140,4 @@ cython_debug/
 
 # local script
 scripts/start-local.sh
+docs/*

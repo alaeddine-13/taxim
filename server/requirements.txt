@@ -9,3 +9,8 @@ djangorestframework-simplejwt==4.4.0
 psycopg2-binary==2.8.5
 pyyaml
 uritemplate
+django-allauth
+django-extensions
+Werkzeug
+pyOpenSSL
+django-mailgun

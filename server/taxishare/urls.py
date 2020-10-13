@@ -1,5 +1,5 @@
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView
 from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
@@ -9,6 +9,7 @@ from .settings import VERSION
 
 
 urlpatterns = [
+    path('accounts/', include('allauth.urls')),
     path('admin/', admin.site.urls),
     path('api/sign_up/', SignUpView.as_view(), name='sign_up'),
     path('api/log_in/', LogInView.as_view(), name='log_in'),
