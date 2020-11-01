@@ -14,6 +14,8 @@ urlpatterns = [
     path('api/sign_up/', SignUpView.as_view(), name='sign_up'),
     path('api/log_in/', LogInView.as_view(), name='log_in'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('auth/', include('rest_framework_social_oauth2.urls')),
+    
     path('swagger-ui/', TemplateView.as_view(
         template_name='templates/swagger-ui.html',
         extra_context={'schema_url':'openapi-schema'}

@@ -1,0 +1,15 @@
+# Manual TODOS
+Manual Actions that need to be done on each new deployments.
+
+## Setip Django Oauth
+Setting Up a New Application
+----------------------------
+
+Go to Django admin and add a new Application with the following configuration:
+
+- ``client_id`` and ``client_secret`` should be left unchanged
+- ``user`` should be your superuser
+- ``redirect_uris`` should be left blank
+- ``client_type`` should be set to ``confidential``
+- ``authorization_grant_type`` should be set to ``'Resource owner password-based'``
+- ``name`` can be set to whatever you'd like

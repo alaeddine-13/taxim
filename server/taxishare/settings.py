@@ -52,6 +52,9 @@ INSTALLED_APPS = [
     'share',
     'channels',
     'django_extensions',
+    'oauth2_provider',
+    'social_django',
+    'rest_framework_social_oauth2',
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
@@ -80,6 +83,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -156,6 +161,8 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        'rest_framework_social_oauth2.authentication.SocialAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
@@ -186,9 +193,26 @@ SITE_ID = 1
 
 
 AUTHENTICATION_BACKENDS = [
+    # Facebook OAuth2
+    'social_core.backends.facebook.FacebookAppOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    # social_oauth2
+    'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    # django
     'django.contrib.auth.backends.ModelBackend',
+    # allauth
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+SOCIAL_AUTH_FACEBOOK_KEY = os.getenv("FB_LOGIN_APP_ID")
+SOCIAL_AUTH_FACEBOOK_SECRET = os.getenv("FB_LOGIN_APP_SECRET")
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
+
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
+  'locale': 'ru_RU',
+  'fields': 'id, name, email, age_range'
+}
+
 
 EMAIL_BACKEND = 'django_mailgun.MailgunBackend'
 MAILGUN_ACCESS_KEY = os.getenv("MAILGUN_ACCESS_KEY")
@@ -196,4 +220,4 @@ MAILGUN_SERVER_NAME = os.getenv("MAILGUN_SERVER_NAME")
 
 DEFAULT_FROM_EMAIL = f"no-reply@{MAILGUN_SERVER_NAME}"
 
-#ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+# ACCOUNT_EMAIL_VERIFICATION = "mandatory"
