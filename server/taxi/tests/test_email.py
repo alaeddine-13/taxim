@@ -1,6 +1,6 @@
 from django.test import TestCase
 from django.core.mail import send_mail
-from taxishare.settings import MAILGUN_SERVER_NAME
+from taxim.settings import MAILGUN_SERVER_NAME
 
 class EmailTestCase(TestCase):
 
