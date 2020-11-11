@@ -4,7 +4,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
 
-from taxi.views import SignUpView, LogInView
+from taxi.views import SignUpView, LogInView, ProfileView
 from .settings import VERSION
 
 
@@ -14,6 +14,7 @@ urlpatterns = [
     path('api/signup/', SignUpView.as_view(), name='signup'),
     path('api/login/', LogInView.as_view(), name='login'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/profile/', ProfileView.as_view(), name='profile'),
     path('auth/', include('rest_framework_social_oauth2.urls')),
 
     path('swagger-ui/', TemplateView.as_view(
@@ -27,6 +28,7 @@ urlpatterns = [
     path('openapi', get_schema_view(
         title="Taxim taxis API",
         description="REST API",
-        version=VERSION
+        version=VERSION,
+        public=True
     ), name='openapi-schema'),
 ]

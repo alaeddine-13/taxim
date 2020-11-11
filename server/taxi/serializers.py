@@ -38,3 +38,12 @@ class LogInSerializer(TokenObtainPairSerializer):
             if key != 'id':
                 token[key] = value
         return token
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = (
+            'username', 'first_name', 'last_name', 'email', 'credits', 'image_url'
+        )
+        read_only_fields = ('id', 'created', 'updated',)
