@@ -23,8 +23,8 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = (
-            'id', 'username', 'password1', 'password2',
-            'first_name', 'last_name', 'email'
+            'id', 'username', 'phone_number', 'password1', 'password2',
+            'first_name', 'last_name', 'email', 'image_url'
         )
         read_only_fields = ('id',)
 
@@ -44,6 +44,6 @@ class ProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = get_user_model()
         fields = (
-            'username', 'first_name', 'last_name', 'email', 'credits', 'image_url'
+            'phone_number', 'username', 'first_name', 'last_name', 'email', 'credits', 'image_url'
         )
         read_only_fields = ('id', 'created', 'updated',)

@@ -57,6 +57,7 @@ INSTALLED_APPS = [
     'social_django',
     'rest_framework_social_oauth2',
     'rest_framework_swagger',
+    'phone_verify',
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
@@ -224,3 +225,19 @@ MAILGUN_SERVER_NAME = os.getenv("MAILGUN_SERVER_NAME")
 DEFAULT_FROM_EMAIL = f"no-reply@{MAILGUN_SERVER_NAME}"
 
 # ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+
+PHONE_VERIFICATION = {
+    "BACKEND": "phone_verify.backends.twilio.TwilioBackend",
+    "OPTIONS": {
+        "SID": os.getenv("TWILIO_SID"),
+        "SECRET": os.getenv("TWILIO_SECRET"),
+        "FROM": "+18555501648",
+        "SANDBOX_TOKEN": "123456",
+    },
+    "TOKEN_LENGTH": 6,
+    "MESSAGE": "Welcome to {app}! Please use security code {security_code} to proceed.",
+    "APP_NAME": "Taxim Phone Verify",
+    "SECURITY_CODE_EXPIRATION_TIME": 3600,  # In seconds only
+    "VERIFY_SECURITY_CODE_ONLY_ONCE": False,  # If False, then a security code can be used multiple times for verification
+}
