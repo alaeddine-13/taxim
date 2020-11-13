@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'oauth2_provider',
     'social_django',
     'rest_framework_social_oauth2',
+    'rest_framework_swagger',
 ]
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
@@ -162,8 +163,8 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
-        'rest_framework_social_oauth2.authentication.SocialAuthentication',
+        #'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
+        #'rest_framework_social_oauth2.authentication.SocialAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
@@ -196,10 +197,10 @@ SITE_ID = 1
 
 AUTHENTICATION_BACKENDS = [
     # Facebook OAuth2
-    'social_core.backends.facebook.FacebookAppOAuth2',
-    'social_core.backends.facebook.FacebookOAuth2',
+    # 'social_core.backends.facebook.FacebookAppOAuth2',
+    # 'social_core.backends.facebook.FacebookOAuth2',
     # social_oauth2
-    'rest_framework_social_oauth2.backends.DjangoOAuth2',
+    # 'rest_framework_social_oauth2.backends.DjangoOAuth2',
     # django
     'django.contrib.auth.backends.ModelBackend',
     # allauth
