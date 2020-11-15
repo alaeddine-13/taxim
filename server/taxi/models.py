@@ -5,6 +5,8 @@ from phone_verify.models import SMSVerification
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.shortcuts import get_object_or_404
+from .backends.storage_backends import PublicMediaStorage, PrivateMediaStorage
+
 
 
 class User(AbstractUser):
@@ -21,3 +23,12 @@ def verify_user(sender, instance=None, created=None, **kwargs):
         user = get_object_or_404(User.objects.filter(phone_number=instance.phone_number))
         user.phone_verified = True
         user.save()
+
+class Upload(models.Model):
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    file = models.FileField(storage=PublicMediaStorage())
+
+
+class UploadPrivate(models.Model):
+    uploaded_at = models.DateTimeField(auto_now_add=True)
+    file = models.FileField(storage=PrivateMediaStorage())

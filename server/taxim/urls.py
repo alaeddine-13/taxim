@@ -1,4 +1,6 @@
 from django.contrib import admin
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import path, include
 from rest_framework_simplejwt.views import TokenRefreshView
 from django.views.generic import TemplateView
@@ -6,7 +8,7 @@ from rest_framework.schemas import get_schema_view
 from rest_framework import routers
 from phone_verify.api import VerificationViewSet
 
-from taxi.views import SignUpView, LogInView, ProfileView
+from taxi.views import SignUpView, LogInView, ProfileView, image_upload
 from .settings import VERSION
 
 phone_router = routers.SimpleRouter()
@@ -22,12 +24,12 @@ urlpatterns = [
     # path('auth/', include('rest_framework_social_oauth2.urls')),
 
     path('swagger-ui/', TemplateView.as_view(
-        template_name='templates/swagger-ui.html',
+        template_name='swagger-ui.html',
         extra_context={'schema_url':'openapi-schema'}
     ), name='swagger-ui'),
 
     path('redoc/', TemplateView.as_view(
-        template_name='templates/redoc.html',
+        template_name='redoc.html',
         extra_context={'schema_url':'openapi-schema'}
     ), name='redoc'),
     path('openapi', get_schema_view(
@@ -36,6 +38,8 @@ urlpatterns = [
         version=VERSION,
         public=True
     ), name='openapi-schema'),
+    path('image/upload', image_upload, name='image-upload'),
 ]
 
 urlpatterns += phone_router.urls
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
