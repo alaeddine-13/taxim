@@ -17,3 +17,6 @@ django-mailgun
 django-rest-framework-social-oauth2==1.1.0
 django-oauth-toolkit==1.3.2
 django-phone-verify==2.0.0
+boto3==1.11.12
+django-storages==1.9.1
+gunicorn==20.0.4
