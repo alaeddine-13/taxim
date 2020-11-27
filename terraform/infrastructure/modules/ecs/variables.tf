@@ -89,3 +89,7 @@ variable "instance_type" {
 variable "ami_id" {
   description = "Instance AMI ID"
 }
+
+variable "ssh_pubkey_file" {
+  description = "SSH public key file"
+}

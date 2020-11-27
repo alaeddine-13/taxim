@@ -6,6 +6,7 @@ variable "env" {
       ecs = object({
         app_count                            = number
         instance_type = string
+        ssh_pubkey_file = string
         autoscaling_policy_name              = string
         autoscaling_request_per_target_value = string
         health_check_path                    = string

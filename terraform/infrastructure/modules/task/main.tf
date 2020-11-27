@@ -69,7 +69,7 @@ resource "aws_ecs_task_definition" "this" {
 }
 
 resource "aws_cloudwatch_log_group" "this" {
-  name              = "/ecs/${var.project_name}"
+  name              = "/ecs/${var.project_name}/${var.stage}"
   retention_in_days = 30
   tags              = local.tags
 

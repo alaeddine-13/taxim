@@ -4,7 +4,6 @@
     "image": "${app_image}",
     "cpu": ${cpu},
     "memory": ${memory},
-    "networkMode": "awsvpc",
     "logConfiguration": {
         "logDriver": "awslogs",
         "options": {

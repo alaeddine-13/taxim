@@ -8,3 +8,4 @@
 secrets.tfvars
 #rendered files
 set_config_to_github.bash
+*.pub

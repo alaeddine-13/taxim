@@ -4,6 +4,7 @@ env = {
     ecs = {
       app_count                            = 1
       instance_type = "t2.micro"
+      ssh_pubkey_file = "id_rsa.pub"
       autoscaling_policy_name              = "ecs_autoscaling"
       autoscaling_request_per_target_value = "250"
       health_check_path                    = "/health_check"
@@ -25,7 +26,7 @@ env = {
       registry_name                = "taximecr"
       app_image                    = "latest"
       cpu                  = "256"
-      memory               = "1024"
+      memory               = "256"
     }
 
     certificate_route53 = {
@@ -49,6 +50,7 @@ env = {
     ecs = {
       app_count                            = 1
       instance_type = "t2.micro"
+      ssh_pubkey_file = "id_rsa.pub"
       autoscaling_policy_name              = "ecs_autoscaling"
       autoscaling_request_per_target_value = "250"
       health_check_path                    = "/health_check"
@@ -70,7 +72,7 @@ env = {
       registry_name                = "taximecr"
       app_image                    = "latest"
       cpu                  = "256"
-      memory               = "1024"
+      memory               = "256"
     }
 
     certificate_route53 = {

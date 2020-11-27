@@ -11,51 +11,66 @@ resource "aws_ecs_cluster" "this" {
 
 }
 
-resource "aws_iam_role" "ecs_host_role" {
+resource "aws_iam_role" "this" {
     name = "ecs_host_role"
     assume_role_policy = file("policies/ecs-role.json")
 }
 
-resource "aws_iam_role_policy" "ecs_instance_role_policy" {
-    name = "ecs_instance_role_policy"
-    policy = file("policies/ecs-instance-role-policy.json")
-    role = aws_iam_role.ecs_host_role.id
+resource "aws_iam_role_policy_attachment" "this" {
+  role       = aws_iam_role.this.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
 
-resource "aws_iam_instance_profile" "ecs" {
+resource "aws_iam_instance_profile" "this" {
     name = "${var.project_name}-ecs-instance-profile"
     path = "/"
-    roles = [aws_iam_role.ecs_host_role.name]
+    roles = [aws_iam_role.this.name]
 }
 
-resource "aws_autoscaling_group" "ecs_cluster" {
+resource "aws_autoscaling_group" "this" {
     availability_zones = ["${var.aws_region}a"]
     name = "ECS ${aws_ecs_cluster.this.name}"
     min_size = "1"
     max_size = "1"
     desired_capacity = "1"
     health_check_type = "EC2"
-    launch_configuration = aws_launch_configuration.ecs.name
+    launch_configuration = aws_launch_configuration.this.name
     vpc_zone_identifier = [var.subnet1_id, var.subnet2_id]
 }
 
-resource "aws_launch_configuration" "ecs" {
-    name = "ECS ${aws_ecs_cluster.this.name}"
-    image_id = var.ami_id
+resource "aws_key_pair" "this" {
+    key_name = "${var.project_name}-key"
+    public_key = file(var.ssh_pubkey_file)
+}
+
+data "aws_ssm_parameter" "ecs_optimized_ami_recommended" {
+  name = "/aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id"
+}
+
+resource "aws_launch_configuration" "this" {
+    name_prefix = "${var.project_name}-lc" 
+    image_id = data.aws_ssm_parameter.ecs_optimized_ami_recommended.value
     instance_type = var.instance_type
     security_groups = [var.sg_id]
-    iam_instance_profile = aws_iam_instance_profile.ecs.name
-    # TODO: is there a good way to make the key configurable sanely?
-    # key_name = aws_key_pair.alex.key_name
+    iam_instance_profile = aws_iam_instance_profile.this.name
+    key_name = aws_key_pair.this.key_name
     associate_public_ip_address = true
     user_data = "#!/bin/bash\necho ECS_CLUSTER='${aws_ecs_cluster.this.name}' > /etc/ecs/ecs.config"
+
+    lifecycle {
+      create_before_destroy = true
+    }
 }
 
 resource "aws_ecs_service" "this" {
   name            = var.project_name
   cluster         = aws_ecs_cluster.this.id
   task_definition = var.task_definition_arn
+  launch_type = "EC2"
+
   desired_count   = var.app_count
+  deployment_minimum_healthy_percent = 100
+  deployment_maximum_percent = 200
 
   network_configuration {
     security_groups  = [var.sg_id]
@@ -67,6 +82,11 @@ resource "aws_ecs_service" "this" {
     target_group_arn = aws_alb_target_group.this.id
     container_name   = var.project_name
     container_port   = var.app_port
+  }
+
+  ordered_placement_strategy {
+    field = "memory"
+    type  = "binpack"
   }
 
   depends_on = [aws_alb_listener.this]

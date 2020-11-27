@@ -36,6 +36,7 @@ module "ecs" {
   aws_region                           = local.vars.aws_region
   ami_id = lookup(local.amis, local.vars.aws_region)
   instance_type = local.vars.ecs.instance_type
+  ssh_pubkey_file = local.vars.ecs.ssh_pubkey_file
   app_count                            = local.vars.ecs.app_count
   app_port                             = local.vars.app_port
   autoscaling_policy_name              = local.vars.ecs.autoscaling_policy_name
