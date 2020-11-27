@@ -29,7 +29,7 @@ SECRET_KEY = 'dt-mqt=6ox9ql2n1s)2n*=d@c84=fm&1&l34hlwq5#pql(^gwp'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "api.ayataxim.me", "api.ayataxim.tn"]
 
 
 # Application definition
