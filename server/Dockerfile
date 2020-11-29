@@ -15,4 +15,5 @@ RUN pip install -r requirements.txt
 
 # copy project
 COPY . .
-CMD ["source", "scripts/run-local.sh"]
+EXPOSE 8000
+CMD /bin/bash -c 'source ./scripts/set-envs.sh && python3 manage.py runserver 0.0.0.0:8000'
