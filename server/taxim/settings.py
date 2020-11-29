@@ -27,9 +27,11 @@ VERSION = "0.0.1"
 SECRET_KEY = 'dt-mqt=6ox9ql2n1s)2n*=d@c84=fm&1&l34hlwq5#pql(^gwp'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = ["localhost", "api.ayataxim.me", "api.ayataxim.tn"]
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
+ALLOWED_HOSTS = ["api.ayataxim.me:8000", "api.ayataxim.me", "api.ayataxim.tn", "localhost"]
 
 
 # Application definition

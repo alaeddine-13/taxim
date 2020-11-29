@@ -67,6 +67,7 @@ resource "aws_ecs_service" "this" {
   cluster         = aws_ecs_cluster.this.id
   task_definition = var.task_definition_arn
   launch_type = "EC2"
+  force_new_deployment = true
 
   desired_count   = var.app_count
   deployment_minimum_healthy_percent = 100
