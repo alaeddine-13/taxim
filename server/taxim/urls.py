@@ -39,7 +39,7 @@ urlpatterns = [
         public=True
     ), name='openapi-schema'),
     path('image/upload', image_upload, name='image-upload'),
-    path('health_check/', include('health_check.urls')),
+    # path('health_check/', include('health_check.urls')),
 ]
 
 urlpatterns += phone_router.urls

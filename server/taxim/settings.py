@@ -31,7 +31,7 @@ DEBUG = False
 
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
-ALLOWED_HOSTS = ["api.ayataxim.me:8000", "api.ayataxim.me", "api.ayataxim.tn", "localhost"]
+ALLOWED_HOSTS = ["api.ayataxim.me", "api.ayataxim.tn", "localhost"]
 
 
 # Application definition
@@ -67,6 +67,7 @@ ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 LOGIN_REDIRECT_URL = '/'
 
 MIDDLEWARE = [
+    'taxi.middlewares.healthcheck.HealthCheckMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
