@@ -31,7 +31,12 @@ DEBUG = False
 
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
-ALLOWED_HOSTS = ["api.ayataxim.me", "api.ayataxim.tn", "localhost"]
+ALLOWED_HOSTS = [
+    "localhost",                            # local
+    "api.ayataxim.local",                   # local
+    "api.ayataxim.me",                      # dev
+    "api.ayataxim.tn",                      # prod
+]
 
 
 # Application definition
